@@ -1,6 +1,54 @@
 
 // Enter your code below.
 
+const formElement = document.querySelector("#new-order-form");
+
+formElement.addEventListener('submit', (e) => {
+
+    e.preventDefault();
+    
+    let itemName = e.target.elements["order-item-name"].value;
+    let itemPrice = e.target.elements["order-item-price"].value;
+    let itemSize = e.target.elements["order-size"].value;
+
+    let formIsValid = true;
+
+    // Validate item name
+    if (isValueNotEmpty(itemName)) {
+        e.target.elements["order-item-name"].classList.remove("is-invalid");
+    } else {
+        e.target.elements["order-item-name"].classList.add("is-invalid");
+        formIsValid = false;
+    }
+
+    // Validate item price
+    if (isValueNotEmpty(itemPrice) && isGreaterThanFive(itemPrice)) {
+        e.target.elements["order-item-price"].classList.remove("is-invalid");
+    } else {
+        e.target.elements["order-item-price"].classList.add("is-invalid");
+        formIsValid = false;
+    }
+
+    // Validate item size
+    if (isValueNotEmpty(itemSize)) {
+        e.target.elements["order-size"].classList.remove("is-invalid");
+    } else {
+        e.target.elements["order-size"].classList.add("is-invalid");
+        formIsValid = false;
+    }
+
+    // Add item to the order list if form is valid
+    if (formIsValid) {
+        addOrderItem(itemName, itemPrice, itemSize);
+    }
+
+    // Reset the form fields
+    e.target.elements["order-item-name"].value = "";
+    e.target.elements["order-item-price"].value = "";
+    e.target.elements["order-size"].value = "";
+
+});
+
 
 // functions needed for assessment (do not change.)
 
